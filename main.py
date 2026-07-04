@@ -24,9 +24,47 @@ def preguntar_opciones(opciones):
 def menu_principal():
     op = preguntar_opciones([
         (0, "Salir"),
-        (1, "Pedidos"),
-        (2, "Estadísticas")
+        (1, "Realizar un pedido"),
+        (2, "Carrito"),
+        (3, "Método de pago"),
+        (4, "Estadísticas")
     ])
 
-menu_principal()
+    if op == 1:
+        menu_pedidos()
+    elif op == 2:
+        carrito()
+    elif op == 3:
+        metodopago = preguntar_opciones([
+            (0, "Efectivo"),
+            (1, "Tarjeta de crédito"),
+            (2, "Tarjeta de débito")
+        ])
+    #    elif op == 3:
+    #    estadisticas()
 
+
+def menu_pedidos():
+    op = preguntar_opciones([
+        (0, "Salir"),
+        (1, "Mostrar menú del día"),
+        (2, "Promociones")
+    ])
+
+    if op == 1:
+        print("este seria el menu del dia")
+    if op == 2:
+        print("aca irian las promociones")
+
+
+def carrito():
+    op = preguntar_opciones([
+        (0, "Salir"),
+        (1, "Ver carrito actual"),
+    ])
+
+    if op == 1:
+        print("aca se mostraria el carrito")
+
+
+menu_principal()
