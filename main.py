@@ -16,9 +16,9 @@ def preguntar_opciones(opciones):
             if op_sel in op_nums:
                 opcion_valida = True
             else:
-                print("Opción inválida, vuelva a intentar.")
+                print("Opción inválida, veulva a intentar.")
         except:
-            pass
+            print("Opción inválida, veulva a intentar.")
     return op_sel
 
 def menu_principal():
