@@ -251,6 +251,7 @@ def menu_pedir():
                 confirmo = preguntar_si_o_no("Está satisfecho con su compra?")
                 if confirmo:
                     registrar_venta()
+                    print_y_esperar("¡¡¡Su compra se realizó con éxito!!!")
                 salir = confirmo
 
 def mostrar_estadisticas():
