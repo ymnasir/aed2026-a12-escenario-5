@@ -65,16 +65,44 @@ def pedidos():
     for num, nombre, precio in productos:
         if num == sel_prod:
             print(f"\nSeleccionaste: {nombre} - ${precio}")
+            precio_final = precio * (1 + recargo_actual)
+            print(f"Método de pago: {metodo_pago_actual}")
+            print(f"Precio final: ${precio_final:.2f}\n")
 
+METODOS_PAGO = {
+    1: ("Efectivo", 0.00),
+    2: ("Transferencia", 0.05),
+    3: ("Tarjeta", 0.10),
+}
+
+metodo_pago_actual = "Efectivo"
+recargo_actual = 0.00
+
+def metodopago():
+    global metodo_pago_actual, recargo_actual
+    op_metodos = [(num, nombre) for num, (nombre, recargo) in METODOS_PAGO.items()]
+
+    print("\nElija el método de pago:")
+    sel_metodo = preguntar_opciones(op_metodos)
+
+    metodo_pago_actual, recargo_actual = METODOS_PAGO[sel_metodo]
+    print(f"\nMétodo de pago actualizado a: {metodo_pago_actual}\n")
 
 def menu_principal():
-    op = preguntar_opciones([
-        (0, "Salir"),
-        (1, "Pedidos"),
-        (2, "Estadísticas")
-    ])
+    salir = False
+    while not salir:
+        op = preguntar_opciones([
+            (0, "Salir"),
+            (1, "Pedidos"),
+            (2, "Método de pago"),
+            (3, "Estadísticas")
+        ])
 
-    if op == 1:
-        pedidos()
+        if op == 0:
+            salir = True
+        elif op == 1:
+            pedidos()
+        elif op == 2:
+            metodopago()
 
 menu_principal()
