@@ -116,6 +116,7 @@ MENU_POR_CODIGO = { item["codigo"]: item for item in MENU }
 
 mp_actual = 1
 carrito = {}
+ventas = {}  
 
 def reset_carrito():
     global mp_actual, carrito
@@ -187,6 +188,15 @@ def calc_precio_total(cant, p_uni):
     nombre, recargo = METODOS_PAGO[mp_actual]
     return cant*p_uni*(1.00 + recargo)
 
+def registrar_venta():
+    for cod, cant in carrito.items():
+        precio = MENU_POR_CODIGO[cod]["precio"]
+        total_prod = calc_precio_total(cant, precio)
+        if cod not in ventas:
+            ventas[cod] = {"cantidad": 0, "total": 0.0}
+        ventas[cod]["cantidad"] += cant
+        ventas[cod]["total"] += total_prod
+
 def mostrar_carrito():
     if len(carrito) > 0:
         print("-"*68)
@@ -238,7 +248,37 @@ def menu_pedir():
         elif op == 5:
             mostrar_carrito()
             if len(carrito) > 0:
-                salir = preguntar_si_o_no("Está satisfecho con su compra?")
+                confirmo = preguntar_si_o_no("Está satisfecho con su compra?")
+                if confirmo:
+                    registrar_venta()
+                salir = confirmo
+
+def mostrar_estadisticas():
+    if len(ventas) == 0:
+        print_y_esperar("Todavía no se registraron ventas.")
+        return
+
+    cantidad_total = 0
+    total_general = 0.0
+    max_cantidad = 0
+    for datos in ventas.values():
+        cantidad_total += datos["cantidad"]
+        total_general += datos["total"]
+        if datos["cantidad"] > max_cantidad:
+            max_cantidad = datos["cantidad"]
+
+    print("\n" + "-"*68)
+    print("ESTADÍSTICAS DE VENTAS")
+    print("-"*68)
+    for cod, datos in ventas.items():
+        nombre = MENU_POR_CODIGO[cod]["nombre"]
+        marca = " <-- más vendido" if datos["cantidad"] == max_cantidad else ""
+        print(f"{datos['cantidad']:>3}x {nombre:<30} | $ {datos['total']:>12.2f}{marca}")
+    print("-"*68)
+    print(f"Total de unidades vendidas (todos los productos): {cantidad_total}")
+    print(f"Total recaudado: $ {total_general:.2f}")
+    print("-"*68)
+    input("\nPresione cualquier tecla para continuar...")
 
 def menu_principal():
     salir = False
@@ -254,7 +294,6 @@ def menu_principal():
         elif op == 1:
             menu_pedir()
         elif op == 2:
-            # implementar...
-            pass
-
+            mostrar_estadisticas()
+            
 menu_principal()
