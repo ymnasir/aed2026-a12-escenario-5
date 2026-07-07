@@ -126,7 +126,6 @@ def preguntar_opciones(opciones):
     op_nums = []
     for num, txt in opciones:
         op_nums.append(num)
-    for num, txt in opciones:
         print(f"{num}. {txt}")
 
     op_sel = -1
@@ -144,8 +143,7 @@ def preguntar_opciones(opciones):
     return op_sel
 
 def preguntar_si_o_no(msj):
-    opcion_valida = False
-    while not opcion_valida:
+    while True:
         op = input(f"{msj} (S/N): ").lower()
         if op in ["s", "n"]:
             return op == "s"
@@ -256,6 +254,7 @@ def menu_principal():
         elif op == 1:
             menu_pedir()
         elif op == 2:
-            metodopago()
+            # implementar...
+            pass
 
 menu_principal()
