@@ -21,6 +21,6 @@ y estadísticas de ventas.
 
 ## Instrucciones de ejecución
 ```
-"aca van las instrucciones de ejecuccion"
+python main.py
 ```
 
