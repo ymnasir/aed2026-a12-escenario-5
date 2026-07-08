@@ -116,7 +116,18 @@ MENU_POR_CODIGO = { item["codigo"]: item for item in MENU }
 
 mp_actual = 1
 carrito = {}
-ventas = {}  
+ventas = {}
+def mostrar_logo():
+    print(r"""
+ __  __            __ _  __  __           _            
+|  \/  |          / _(_)|  \/  |         | |           
+| \  / | ___  _ __| |_ _| \  / | __ _ ___| |_ ___ _ __ 
+| |\/| |/ _ \| '__|  _| | |\/| |/ _` / __| __/ _ \ '__|
+| |  | | (_) | |  | | | | |  | | (_| \__ \ ||  __/ |   
+|_|  |_|\___/|_|  |_| |_|_|  |_|\__,_|___/\__\___|_|   
+
+           Tu pedido, a tu manera  
+    """)
 
 def reset_carrito():
     global mp_actual, carrito
@@ -299,6 +310,7 @@ def mostrar_estadisticas():
     print("-"*68)
     input("\nPresione cualquier tecla para continuar...")
 
+
 def menu_principal():
     salir = False
     while not salir:
@@ -314,5 +326,5 @@ def menu_principal():
             menu_pedir()
         elif op == 2:
             mostrar_estadisticas()
-            
+mostrar_logo()            
 menu_principal()
