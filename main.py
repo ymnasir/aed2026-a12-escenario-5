@@ -173,7 +173,17 @@ def preguntar_producto():
     print(f"\nComidas disponibles en {cat}:")
     codigo = preguntar_opciones(ops)
     return codigo
+def preguntar_producto_carrito():
+    if len(carrito) == 0:
+        return 0
 
+    ops = [(0, "Cancelar")]
+    for cod, cant in carrito.items():
+        nombre = MENU_POR_CODIGO[cod]["nombre"]
+        ops.append((cod, f"{nombre} (x{cant})"))
+
+    print("\nElija el producto a quitar:")
+    return preguntar_opciones(ops)
 def preguntar_metodo_pago():
     ops = [(0, "Cancelar")]
     for num in METODOS_PAGO:
@@ -219,7 +229,8 @@ def menu_pedir():
             (2, "Método de pago"),
             (3, "Ver carrito"),
             (4, "Vaciar carrito"),
-            (5, "Efectuar compra")
+            (5, "Quitar del carrito"),
+            (6, "Efectuar compra")
         ])
         if op == 0:
             salir = True
@@ -246,6 +257,13 @@ def menu_pedir():
         elif op == 4:
             reset_carrito()
         elif op == 5:
+            prod = preguntar_producto_carrito()
+            if prod != 0:
+                carrito[prod] -= 1
+                if carrito[prod] <= 0:
+                    del carrito[prod]
+                print_y_esperar("Se quitó una unidad del producto del carrito.")
+        elif op == 6:
             mostrar_carrito()
             if len(carrito) > 0:
                 confirmo = preguntar_si_o_no("Está satisfecho con su compra?")
